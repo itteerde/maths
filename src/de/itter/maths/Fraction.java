@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Fraction implements Serializable, Comparable<Fraction> {
 
 	private static final long serialVersionUID = 7799761909608343361L;
-	long numerator;
-	long denominator;
+	private long numerator;
+	private long denominator;
 
 	public Fraction(long numerator, long denominator) {
 		this.numerator = numerator;
@@ -27,10 +27,48 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 		return 0;
 	}
 
-	public static Fraction simplify(Fraction a, Fraction b) {
-		Fraction result = new Fraction(0, 0);
+	public void simplify() {
+		long gcd = Algorithms.gcd(numerator, denominator);
 
-		return result;
+		numerator /= gcd;
+		denominator /= gcd;
 	}
 
+	public long getNumerator() {
+		return numerator;
+	}
+
+	public long getDenominator() {
+		return denominator;
+	}
+
+	@Override
+	public String toString() {
+		return numerator + "/" + denominator;
+	}
+
+	public Fraction times(Fraction f) {
+		return new Fraction(numerator * f.numerator, denominator * f.denominator);
+	}
+
+	public Fraction divideBy(Fraction f) {
+		return new Fraction(numerator * f.denominator, denominator * f.numerator);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+
+		if (!(o instanceof Fraction)) {
+			return false;
+		}
+
+		if (this.compareTo((Fraction) o) != 0) {
+			return false;
+		}
+
+		return true;
+	}
 }
