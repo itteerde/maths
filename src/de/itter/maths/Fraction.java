@@ -57,6 +57,16 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 		return new Fraction(numerator * (lcm / denominator) + f.numerator * (lcm / f.denominator), lcm);
 	}
 
+	public Fraction minus(Fraction f) {
+		if (denominator == f.denominator) {
+			return new Fraction(numerator - f.numerator, denominator);
+		}
+
+		long lcm = Algorithms.lcm(denominator, f.denominator);
+
+		return new Fraction(numerator * (lcm / denominator) - f.numerator * (lcm / f.denominator), lcm);
+	}
+
 	public Fraction times(Fraction f) {
 		return new Fraction(numerator * f.numerator, denominator * f.denominator);
 	}

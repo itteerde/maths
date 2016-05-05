@@ -38,6 +38,14 @@ public class FractionTest {
 	}
 
 	@Test
+	public void testMinus() {
+		Fraction a = new Fraction(13, 7);
+		Fraction b = new Fraction(12, 17);
+
+		assertEquals(new Fraction(137, 119), a.minus(b));
+	}
+
+	@Test
 	public void testTimes() {
 		Fraction a = new Fraction(13, 17);
 		Fraction b = new Fraction(12, 17);
