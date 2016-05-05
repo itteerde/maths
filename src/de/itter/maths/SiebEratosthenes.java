@@ -11,8 +11,24 @@ public class SiebEratosthenes {
 
 		this.maximum = maximum;
 
+		boolean[] isPrime = field(maximum);
+
+		for (int i = 2; i < isPrime.length; i++) {
+			if (isPrime[i]) {
+				primes.add(new Integer(i));
+			}
+		}
+	}
+
+	/**
+	 * For readability the number n is represented by index n, not n-1.
+	 * 
+	 * @param maximum
+	 * @return
+	 */
+	public static boolean[] field(int maximum) {
 		boolean[] isPrime = new boolean[maximum + 1];// waste a little for
-														// readability
+		// readability
 		for (int i = 2; i <= maximum; i++) {
 			isPrime[i] = true;
 		}
@@ -25,12 +41,7 @@ public class SiebEratosthenes {
 				}
 			}
 		}
-
-		for (int i = 2; i < isPrime.length; i++) {
-			if (isPrime[i]) {
-				primes.add(new Integer(i));
-			}
-		}
+		return isPrime;
 	}
 
 	public int nth(int n) {
