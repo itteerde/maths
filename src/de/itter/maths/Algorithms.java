@@ -115,7 +115,7 @@ public class Algorithms {
 		BigInteger fac = BigInteger.ONE;
 
 		for (int i = 1; i <= n; i++) {
-			fac = fac.multiply(fac.add(BigInteger.ONE));
+			fac = fac.multiply(new BigInteger(Integer.toString(i)));
 		}
 
 		return fac;

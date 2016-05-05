@@ -19,6 +19,7 @@ public class AlgorithmsTest {
 		assertEquals(351, Algorithms.lcm(27, 13));
 	}
 
+	@Test
 	public void testFac() {
 		assertEquals(new BigInteger("720"), Algorithms.fac(6));
 	}
