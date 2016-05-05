@@ -25,12 +25,15 @@ public class AlgorithmsTest {
 	}
 
 	@Test
-	public void testDivisors() {
-		long[] d30 = { 2, 3, 5 };
+	public void testFactorize() {
+		long[][] d30 = { { 2, 1 }, { 3, 1 }, { 5, 1 } };
+		long[][] d6 = { { 2, 1 }, { 3, 1 } };
+		assertEquals(d6[0][0], Algorithms.factorize(6)[0][0]);
+		assertEquals(d6[1][0], Algorithms.factorize(6)[1][0]);
 
-		assertEquals(d30[0], Algorithms.factorize(30)[0]);
-		assertEquals(d30[1], Algorithms.factorize(30)[1]);
-		assertEquals(d30[2], Algorithms.factorize(30)[2]);
+		assertEquals(d30[0][0], Algorithms.factorize(30)[0][0]);
+		assertEquals(d30[1][0], Algorithms.factorize(30)[1][0]);
+		assertEquals(d30[2][0], Algorithms.factorize(30)[2][0]);
 	}
 
 }

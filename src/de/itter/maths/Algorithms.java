@@ -53,12 +53,12 @@ public class Algorithms {
 		return result;
 	}
 
-	public static long[] factorize(long n) {
+	public static long[][] factorize(long n) {
 
 		long rootOfN = (long) Math.sqrt(n);
 		Vector<Long> factors = new Vector<Long>();
 
-		for (long t = 2; t <= rootOfN && n > 1;) {
+		for (long t = 2; n > 1;) {
 			if (n % t == 0) {
 				factors.add(t);
 				n /= t;
@@ -70,9 +70,15 @@ public class Algorithms {
 		if (factors.size() == 0) {
 			factors.add(n);
 		}
-		long[] result = new long[factors.size()];
+		long[][] result = new long[factors.size()][];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = factors.elementAt(i);
+			if (result[i] == null) {
+				result[i] = new long[2];
+				result[i][0] = factors.elementAt(i);
+
+			}
+
+			result[i][1]++;
 		}
 
 		return result;
