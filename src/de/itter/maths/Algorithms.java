@@ -111,6 +111,16 @@ public class Algorithms {
 		return properDivisors;
 	}
 
+	public static BigInteger fac(int n) {
+		BigInteger fac = BigInteger.ONE;
+
+		for (int i = 1; i <= n; i++) {
+			fac = fac.multiply(fac.add(BigInteger.ONE));
+		}
+
+		return fac;
+	}
+
 	public static double root(double num, double root) {
 		return Math.pow(Math.E, Math.log(num) / root);
 	}
