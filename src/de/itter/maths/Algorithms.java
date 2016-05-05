@@ -42,6 +42,17 @@ public class Algorithms {
 		return a;
 	}
 
+	public static long lcm(long a, long b) {
+		return a * (b / gcd(a, b));
+	}
+
+	public static long lcm(long[] input) {
+		long result = input[0];
+		for (int i = 1; i < input.length; i++)
+			result = lcm(result, input[i]);
+		return result;
+	}
+
 	public static BigInteger[] factorize(BigInteger n) {
 		Vector<BigInteger> factors = new Vector<BigInteger>();
 
