@@ -13,6 +13,11 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 		this.denominator = denominator;
 	}
 
+	public Fraction(long n) {
+		numerator = n;
+		denominator = 1;
+	}
+
 	@Override
 	public int compareTo(Fraction r) {
 
@@ -44,6 +49,9 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 
 	@Override
 	public String toString() {
+		if (isWholeNumber()) {
+			return Long.toString(numerator);
+		}
 		return numerator + "/" + denominator;
 	}
 
@@ -55,6 +63,18 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 		long lcm = Algorithms.lcm(denominator, f.denominator);
 
 		return new Fraction(numerator * (lcm / denominator) + f.numerator * (lcm / f.denominator), lcm);
+	}
+
+	public Fraction plus(long n) {
+		return this.plus(new Fraction(n));
+	}
+
+	public Fraction minus(long n) {
+		return this.minus(new Fraction(n));
+	}
+
+	public Fraction times(long n) {
+		return this.times(new Fraction(n));
 	}
 
 	public Fraction minus(Fraction f) {
@@ -90,5 +110,16 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 		}
 
 		return true;
+	}
+
+	public long getWholeNumberPart() {
+		return numerator / denominator;
+	}
+
+	public boolean isWholeNumber() {
+		if (denominator == 1) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -26,7 +26,10 @@ public class FractionTest {
 	@Test
 	public void testToString() {
 		Fraction a = new Fraction(13, 17);
+		Fraction b = new Fraction(7);
+
 		assertEquals("13/17", a.toString());
+		assertEquals("7", b.toString());
 	}
 
 	@Test
@@ -35,6 +38,7 @@ public class FractionTest {
 		Fraction b = new Fraction(12, 17);
 
 		assertEquals(new Fraction(305, 119), a.plus(b));
+		assertEquals(new Fraction(13 + 3 * 7, 7), a.plus(3));
 	}
 
 	@Test
