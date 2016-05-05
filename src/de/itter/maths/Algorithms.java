@@ -53,6 +53,31 @@ public class Algorithms {
 		return result;
 	}
 
+	public static long[] factorize(long n) {
+
+		long rootOfN = (long) Math.sqrt(n);
+		Vector<Long> factors = new Vector<Long>();
+
+		for (long t = 2; t <= rootOfN && n > 1;) {
+			if (n % t == 0) {
+				factors.add(t);
+				n /= t;
+			} else {
+				t++;
+			}
+		}
+
+		if (factors.size() == 0) {
+			factors.add(n);
+		}
+		long[] result = new long[factors.size()];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = factors.elementAt(i);
+		}
+
+		return result;
+	}
+
 	public static BigInteger[] factorize(BigInteger n) {
 		Vector<BigInteger> factors = new Vector<BigInteger>();
 

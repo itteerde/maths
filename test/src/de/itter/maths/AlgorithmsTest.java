@@ -24,4 +24,13 @@ public class AlgorithmsTest {
 		assertEquals(new BigInteger("720"), Algorithms.fac(6));
 	}
 
+	@Test
+	public void testDivisors() {
+		long[] d30 = { 2, 3, 5 };
+
+		assertEquals(d30[0], Algorithms.factorize(30)[0]);
+		assertEquals(d30[1], Algorithms.factorize(30)[1]);
+		assertEquals(d30[2], Algorithms.factorize(30)[2]);
+	}
+
 }
