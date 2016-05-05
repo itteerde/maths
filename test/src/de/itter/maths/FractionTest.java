@@ -69,6 +69,26 @@ public class FractionTest {
 	}
 
 	@Test
+	public void testDivideBy() {
+		Fraction a = new Fraction(1, 3);
+
+		assertEquals(new Fraction(1, 6), a.divideBy(2));
+	}
+
+	/**
+	 * This is not a good test as it cannot test multiple cases that should
+	 * throw the exception. For example there cannot be a second division by
+	 * zero for a Fraction argument in this one method with the annotation
+	 * solution.
+	 */
+	@Test(expected = ArithmeticException.class)
+	public void testDivideByZero() {
+		Fraction a = new Fraction(1, 3);
+
+		a.divideBy(0);
+	}
+
+	@Test
 	public void testTimesLotto() {
 		Fraction k1 = new Fraction(6, 49);
 		Fraction k2 = new Fraction(5, 48);

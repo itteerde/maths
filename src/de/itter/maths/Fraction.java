@@ -92,7 +92,15 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 	}
 
 	public Fraction divideBy(Fraction f) {
+		if (f.getNumerator() == 0) {
+			throw new ArithmeticException("division by zero");
+		}
+
 		return new Fraction(numerator * f.denominator, denominator * f.numerator);
+	}
+
+	public Fraction divideBy(long n) {
+		return this.divideBy(new Fraction(n));
 	}
 
 	@Override
