@@ -55,7 +55,6 @@ public class Algorithms {
 
 	public static long[][] factorize(long n) {
 
-		long rootOfN = (long) Math.sqrt(n);
 		Vector<Long> factors = new Vector<Long>();
 
 		for (long t = 2; n > 1;) {

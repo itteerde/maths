@@ -100,4 +100,5 @@ public class FractionTest {
 
 		assertEquals(new Fraction(1, 13983816), lotto);
 	}
+
 }
