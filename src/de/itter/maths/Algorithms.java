@@ -53,11 +53,42 @@ public class Algorithms {
 		return result;
 	}
 
+	public static long[][] factorize(long n, long[] primes) {
+		Vector<Long> factors = new Vector<Long>();
+		long on = n;
+
+		for (int i = 0; n > 1 && (primes[i] * 2 <= on);) {
+			if (n % primes[i] == 0) {
+				factors.add(primes[i]);
+				n /= primes[i];
+			} else {
+				i++;
+			}
+		}
+
+		if (factors.size() == 0) {
+			factors.add(n);
+		}
+		long[][] result = new long[factors.size()][];
+		for (int i = 0; i < result.length; i++) {
+			if (result[i] == null) {
+				result[i] = new long[2];
+				result[i][0] = factors.elementAt(i);
+
+			}
+
+			result[i][1]++;
+		}
+
+		return result;
+	}
+
 	public static long[][] factorize(long n) {
 
 		Vector<Long> factors = new Vector<Long>();
+		long on = n;
 
-		for (long t = 2; n > 1;) {
+		for (long t = 2; n > 1 && (t * 2 <= on);) {
 			if (n % t == 0) {
 				factors.add(t);
 				n /= t;

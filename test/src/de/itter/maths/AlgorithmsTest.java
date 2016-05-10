@@ -36,4 +36,24 @@ public class AlgorithmsTest {
 		assertEquals(d30[2][0], Algorithms.factorize(30)[2][0]);
 	}
 
+	@Test
+	public void testFactorizeWithPrimeVector() {
+
+		SiebEratosthenes sieb = new SiebEratosthenes(1000);
+		Object[] primesO = sieb.primes(1000).toArray();
+		long[] primes = new long[primesO.length];
+		for (int i = 0; i < primes.length; i++) {
+			primes[i] = (Integer) primesO[i];
+		}
+
+		long[][] d30 = { { 2, 1 }, { 3, 1 }, { 5, 1 } };
+		long[][] d6 = { { 2, 1 }, { 3, 1 } };
+		assertEquals(d6[0][0], Algorithms.factorize(6, primes)[0][0]);
+		assertEquals(d6[1][0], Algorithms.factorize(6, primes)[1][0]);
+
+		assertEquals(d30[0][0], Algorithms.factorize(30, primes)[0][0]);
+		assertEquals(d30[1][0], Algorithms.factorize(30, primes)[1][0]);
+		assertEquals(d30[2][0], Algorithms.factorize(30, primes)[2][0]);
+	}
+
 }
