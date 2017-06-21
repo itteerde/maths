@@ -1,12 +1,15 @@
 package de.itter.maths;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 public class Fraction implements Serializable, Comparable<Fraction> {
 
 	private static final long serialVersionUID = 7799761909608343361L;
 	private long numerator;
 	private long denominator;
+	private BigInteger bigNumerator = null;
+	private BigInteger bigDenominator = null;
 
 	public Fraction(long numerator, long denominator) {
 		this.numerator = numerator;
@@ -17,7 +20,20 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 		numerator = n;
 		denominator = 1;
 	}
+	
+	public Fraction(BigInteger numerator, BigInteger denominator){
+		bigNumerator = numerator;
+		bigDenominator = denominator;
+	}
 
+	private boolean isBigFraction(){
+		if(bigNumerator!=null){
+			return true;
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public int compareTo(Fraction r) {
 
