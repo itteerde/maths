@@ -2,6 +2,8 @@ package de.itter.maths;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigInteger;
+
 import org.junit.Test;
 
 public class FractionTest {
@@ -66,6 +68,10 @@ public class FractionTest {
 		a.simplify();
 
 		assertEquals(a.getNumerator(), b.getNumerator());
+		
+		a = new Fraction(new BigInteger("123456789123456789123456789123456789"),new BigInteger("123456789123456789123456789123456789"));
+		a.simplify();
+		assertEquals("1/1",a.toString());
 	}
 
 	@Test
@@ -99,6 +105,23 @@ public class FractionTest {
 		Fraction lotto = k1.times(k2).times(k3).times(k4).times(k5).times(k6);
 
 		assertEquals(new Fraction(1, 13983816), lotto);
+	}
+	
+	@Test
+	public void testFractionBigInteger(){
+		String numeratorL = "123456789123456789123456789";
+		String denominatorL = "987654321987654321987654321";
+		String numeratorR = "123456789123456789123456789";
+		String denominatorR = "987654321987654321987654321";
+		
+		Fraction l = new Fraction(new BigInteger(numeratorL),new BigInteger(denominatorL));
+		Fraction r = new Fraction(new BigInteger(numeratorR),new BigInteger(denominatorR));
+		
+		assertEquals(l,r);
+		assertEquals(0,l.compareTo(r));
+		
+		r = r.plus(new Fraction(1,1));
+		assertEquals(-1,l.compareTo(r));
 	}
 
 }

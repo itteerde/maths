@@ -3,25 +3,39 @@ package de.itter.maths;
 import java.io.Serializable;
 import java.math.BigInteger;
 
+/**
+ * Exact fractions with no size limit (other than memory) using java.math.BigInteger for numerator and denominator if necessary. Small 
+ * fractions (long/long) are converted into big fractions (BigInteger/BigInteger) as needed.
+ * 
+ * @author Erik Itter
+ */
 public class Fraction implements Serializable, Comparable<Fraction> {
 
 	private static final long serialVersionUID = 7799761909608343361L;
+	private static final String ERROR_DIVISION_BY_ZERO = "division by zero";
+
 	private long numerator;
 	private long denominator;
 	private BigInteger bigNumerator = null;
 	private BigInteger bigDenominator = null;
 
 	public Fraction(long numerator, long denominator) {
+		if(denominator == 0){
+			throw new ArithmeticException(ERROR_DIVISION_BY_ZERO);
+		}
 		this.numerator = numerator;
 		this.denominator = denominator;
 	}
 
 	public Fraction(long n) {
-		numerator = n;
-		denominator = 1;
+		this(n,1);
 	}
 	
 	public Fraction(BigInteger numerator, BigInteger denominator){
+		if(denominator.equals(BigInteger.ZERO)){
+			throw new ArithmeticException(ERROR_DIVISION_BY_ZERO);
+		}
+		
 		bigNumerator = numerator;
 		bigDenominator = denominator;
 	}
@@ -36,6 +50,36 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 	
 	@Override
 	public int compareTo(Fraction r) {
+		
+		if(this.isBigFraction() || r.isBigFraction()){
+			if(this.isBigFraction() && r.isBigFraction()){
+				return (this.getBigNumerator().multiply(r.getBigDenominator()).compareTo(r.getBigNumerator().multiply(this.getBigDenominator())));
+			}
+			
+			Fraction bigL = null;
+			
+			if(!this.isBigFraction()){
+				BigInteger numeratorL = new BigInteger(Long.toString(this.getNumerator()));
+				BigInteger denominatiorL = new BigInteger(Long.toString(this.getDenominator()));
+				
+				bigL = new Fraction(numeratorL,denominatiorL);
+			}else{
+				bigL = this;
+			}
+			
+			Fraction bigR  = null;
+			if(!r.isBigFraction()){
+				BigInteger numeratorR = new BigInteger(Long.toString(r.getNumerator()));
+				BigInteger denominatiorR = new BigInteger(Long.toString(r.getDenominator()));
+				
+				bigL = new Fraction(numeratorR,denominatiorR);
+				
+			}else{
+				bigR = r;
+			}
+			
+			return bigL.compareTo(bigR);
+		}
 
 		if (numerator * r.denominator < r.numerator * denominator) {
 			return -1;
@@ -49,10 +93,29 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 	}
 
 	public void simplify() {
+		if(isBigFraction()){
+			simplifyBig();
+			return;
+		}
+		
 		long gcd = Algorithms.gcd(numerator, denominator);
 
 		numerator /= gcd;
 		denominator /= gcd;
+	}
+
+	private void simplifyBig() {
+		BigInteger gcd = Algorithms.gcd(getBigNumerator(), getBigDenominator());
+
+		bigNumerator = getBigNumerator().divide(gcd);
+		bigDenominator = getBigDenominator().divide(gcd);
+		
+		if(bigNumerator.compareTo(new BigInteger(Long.toString(Long.MAX_VALUE)))==-1 && bigDenominator.compareTo(new BigInteger(Long.toString(Long.MAX_VALUE)))==-1){
+			numerator = bigNumerator.longValue();
+			denominator = bigDenominator.longValue();
+			
+			bigDenominator = null;
+		}
 	}
 
 	public long getNumerator() {
@@ -72,6 +135,10 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 	}
 
 	public Fraction plus(Fraction f) {
+		if(this.isBigFraction() || f.isBigFraction()){
+			return this.plusBigFraction(f);
+		}
+		
 		if (denominator == f.denominator) {
 			return new Fraction(numerator + f.numerator, denominator);
 		}
@@ -79,6 +146,23 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 		long lcm = Algorithms.lcm(denominator, f.denominator);
 
 		return new Fraction(numerator * (lcm / denominator) + f.numerator * (lcm / f.denominator), lcm);
+	}
+
+	private Fraction plusBigFraction(Fraction f) {
+		Fraction l = this;
+		Fraction r = f;
+
+		if(!this.isBigFraction()){
+			l = toBigFraction(this);
+		}
+		
+		if(!f.isBigFraction()){
+			r= toBigFraction(f);
+		}
+		
+		BigInteger lcm = Algorithms.lcmBigInteger(l.bigDenominator, r.bigDenominator);
+		
+		return new Fraction((l.bigNumerator.multiply(lcm.divide(l.bigDenominator))).add(r.bigNumerator.multiply(lcm.divide(r.bigDenominator))),lcm);
 	}
 
 	public Fraction plus(long n) {
@@ -141,9 +225,31 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 	}
 
 	public boolean isWholeNumber() {
+		simplify();
+		
+		if(isBigFraction()){
+			return getBigDenominator().equals(BigInteger.ONE);
+		}
+		
 		if (denominator == 1) {
 			return true;
 		}
 		return false;
+	}
+
+	public BigInteger getBigNumerator() {
+		return bigNumerator;
+	}
+
+	public BigInteger getBigDenominator() {
+		return bigDenominator;
+	}
+	
+	private Fraction toBigFraction(Fraction f){
+		if(f.isBigFraction()){
+			return f;
+		}
+		
+		return new Fraction(new BigInteger(Long.toString(f.getNumerator())),new BigInteger(Long.toString(f.getDenominator())));
 	}
 }

@@ -52,6 +52,10 @@ public class Algorithms {
 			result = lcm(result, input[i]);
 		return result;
 	}
+	
+	public static BigInteger lcmBigInteger(BigInteger a, BigInteger b){
+		return a.multiply(b.divide(gcd(a,b)));
+	}
 
 	public static long[][] factorize(long n, long[] primes) {
 		Vector<Long> factors = new Vector<Long>();
