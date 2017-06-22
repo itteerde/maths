@@ -51,20 +51,18 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 	@Override
 	public int compareTo(Fraction r) {
 		
-		if(this.isBigFraction() || r.isBigFraction()){
-			if(this.isBigFraction() && r.isBigFraction()){
-				return (this.getBigNumerator().multiply(r.getBigDenominator()).compareTo(r.getBigNumerator().multiply(this.getBigDenominator())));
+		if(isBigFraction() || r.isBigFraction()){
+			if(isBigFraction() && r.isBigFraction()){
+				return (getBigNumerator().multiply(r.getBigDenominator()).compareTo(r.getBigNumerator().multiply(getBigDenominator())));
 			}
 			
 			Fraction bigL = null;
 			
-			if(!this.isBigFraction()){
-				BigInteger numeratorL = new BigInteger(Long.toString(this.getNumerator()));
-				BigInteger denominatiorL = new BigInteger(Long.toString(this.getDenominator()));
+			if(!isBigFraction()){
+				BigInteger numeratorL = new BigInteger(Long.toString(getNumerator()));
+				BigInteger denominatiorL = new BigInteger(Long.toString(getDenominator()));
 				
 				bigL = new Fraction(numeratorL,denominatiorL);
-			}else{
-				bigL = this;
 			}
 			
 			Fraction bigR  = null;
@@ -72,13 +70,13 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 				BigInteger numeratorR = new BigInteger(Long.toString(r.getNumerator()));
 				BigInteger denominatiorR = new BigInteger(Long.toString(r.getDenominator()));
 				
-				bigL = new Fraction(numeratorR,denominatiorR);
+				bigR = new Fraction(numeratorR,denominatiorR);
 				
 			}else{
 				bigR = r;
 			}
 			
-			return bigL.compareTo(bigR);
+			return bigL==null? compareTo(bigR):bigL.compareTo(bigR);
 		}
 
 		if (numerator * r.denominator < r.numerator * denominator) {
@@ -128,6 +126,13 @@ public class Fraction implements Serializable, Comparable<Fraction> {
 
 	@Override
 	public String toString() {
+		if(isBigFraction()){
+			if (isWholeNumber()) {
+				return bigNumerator.toString();
+			}
+			return bigNumerator.toString() + "/" + bigDenominator.toString();
+		}
+		
 		if (isWholeNumber()) {
 			return Long.toString(numerator);
 		}

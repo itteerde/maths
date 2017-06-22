@@ -23,6 +23,11 @@ public class FractionTest {
 		assertEquals(a.compareTo(b), 1);
 		assertEquals(b.compareTo(a), -1);
 		assertEquals(a.compareTo(a), 0);
+		
+		a = new Fraction(new BigInteger("123456789123456789123456789123456789"),new BigInteger("123456789123456789123456789123456789"));
+		b = new Fraction(1,1);
+		
+		assertEquals(0,a.compareTo(b));
 	}
 
 	@Test

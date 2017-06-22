@@ -6,6 +6,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
+/**
+ * Maths for all purposes, especially for Project Euler problems.
+ * 
+ * @author Erik Itter
+ *
+ */
 public class Algorithms {
 
 	public static int gcd(int a, int b) {
