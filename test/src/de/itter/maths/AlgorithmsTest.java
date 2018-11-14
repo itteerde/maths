@@ -12,6 +12,7 @@ public class AlgorithmsTest {
 	public void testGCD() {
 
 		assertEquals(14, Algorithms.gcd(123242, 546742));
+		assertEquals(new BigInteger("14"), Algorithms.gcd(new BigInteger("123242"), new BigInteger("546742")));
 	}
 
 	@Test
