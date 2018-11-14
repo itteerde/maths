@@ -4,16 +4,12 @@
 package de.itter.maths;
 
 /**
- * @author eriki
+ * @author Erik Itter
  *
  */
-public class Function {
-	public Set getDomain() {
-		return null;
-	}
+public interface Function {
+	public Set getDomain();
 
-	public Set getCoDomain() {
-		return null;
-	}
+	public Set getCoDomain();
 
 }

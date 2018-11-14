@@ -4,9 +4,9 @@
 package de.itter.maths;
 
 /**
- * @author eriki
+ * @author Erik Itter
  *
  */
-public class Variable {
+public interface Variable extends Term {
 
 }

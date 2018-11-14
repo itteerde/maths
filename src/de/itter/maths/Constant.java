@@ -7,6 +7,6 @@ package de.itter.maths;
  * @author eriki
  *
  */
-public class Constant {
+public interface Constant extends Term {
 
 }
